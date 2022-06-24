@@ -20,6 +20,7 @@ export class Wishlist extends BaseEntity {
 
   @OneToMany(() => WishlistItem, (wishlistItem) => wishlistItem.wishlist, {
     onDelete: "CASCADE",
+    eager: true
   })
   items: WishlistItem[]
 
@@ -41,6 +42,6 @@ export class Wishlist extends BaseEntity {
 
   @BeforeInsert()
   private beforeInsert(): void {
-    this.id = generateEntityId(this.id, "wishlist")
+    this.id = generateEntityId(this.id, "wish")
   }
 }

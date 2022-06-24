@@ -19,7 +19,7 @@ export class WishlistItem extends BaseEntity {
   @Column()
   product_id: string
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, {eager: true})
   @JoinColumn({name: "product_id"})
   product: Product
 
