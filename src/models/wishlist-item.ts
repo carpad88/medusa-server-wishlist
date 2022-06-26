@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm"
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, Unique } from "typeorm"
 import { BaseEntity } from "@medusajs/medusa"
 import { generateEntityId } from "@medusajs/medusa/dist/utils"
 import { Product } from '@medusajs/medusa/dist/models/product'
@@ -6,8 +6,8 @@ import { Wishlist } from './wishlist';
 
 
 @Entity()
+@Unique(["wishlist_id", "product_id"])
 export class WishlistItem extends BaseEntity {
-  @Index()
   @Column()
   wishlist_id: string
 
@@ -15,7 +15,6 @@ export class WishlistItem extends BaseEntity {
   @JoinColumn({name: "wishlist_id"})
   wishlist: Wishlist
 
-  @Index()
   @Column()
   product_id: string
 

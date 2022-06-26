@@ -5,7 +5,7 @@ export class wishlist1655952820403 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Tables
     await queryRunner.query(`CREATE TABLE "wishlist" ( "id" character varying NOT NULL, "region_id" character varying NOT NULL, "customer_id" character varying, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP WITH TIME ZONE, CONSTRAINT "PK_gknmp6lnikxobwv1rhv1dgs982" PRIMARY KEY ("id") )`);
-    await queryRunner.query(`CREATE TABLE "wishlist_item" ( "id" character varying NOT NULL, "wishlist_id" character varying, "product_id" character varying, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP WITH TIME ZONE, CONSTRAINT "PK_7p8joiapu4u0dxbsatkm5n1qs2" PRIMARY KEY ("id") )`);
+    await queryRunner.query(`CREATE TABLE "wishlist_item" ( "id" character varying NOT NULL, "wishlist_id" character varying, "product_id" character varying, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP WITH TIME ZONE, CONSTRAINT "PK_7p8joiapu4u0dxbsatkm5n1qs2" PRIMARY KEY ("wishlist_id", "product_id") )`);
 
     // Foreign key constraints
     await queryRunner.query(`ALTER TABLE "wishlist" ADD CONSTRAINT "FK_auvt4ec8rnokwoadgpxqf9bf66" FOREIGN KEY ("region_id") REFERENCES "region"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
