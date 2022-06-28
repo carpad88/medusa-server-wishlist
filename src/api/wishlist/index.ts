@@ -15,8 +15,8 @@ export default (app) => {
 
   route.post('/', async (req, res) => {
     const wishlistService = req.scope.resolve('wishlistService')
-    const createWishlist = await wishlistService.create(req.body.region_id)
-    res.json(createWishlist)
+    const wishlist = await wishlistService.create(req.body.region_id)
+    res.json(wishlist)
   })
 
   // Wishlist items

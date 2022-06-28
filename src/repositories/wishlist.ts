@@ -1,5 +1,4 @@
 import { EntityRepository, Repository } from "typeorm"
-
 import { Wishlist } from "../models/wishlist"
 
 @EntityRepository(Wishlist)
