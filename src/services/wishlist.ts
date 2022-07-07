@@ -15,22 +15,22 @@ class WishlistService extends BaseService {
       const [wishlist] = await wishlistRepository.find({ where: { id } })
 
       if (!wishlist) {
-        throw new MedusaError(MedusaError.Types.NOT_FOUND, `Wishlist with ${id} was not found`)
+        throw new MedusaError(MedusaError.Types.NOT_FOUND, `Wishlist with ${ id } was not found`)
       }
 
       return wishlist
     })
   }
 
-  async create(region_id) {
+  async create(payload) {
     return await this.atomicPhase_(async (transactionManager) => {
 
-      if (!region_id) {
+      if (!payload.region_id) {
         throw new MedusaError(MedusaError.Types.INVALID_DATA, `A region_id must be provided when creating a wishlist`)
       }
 
       const wishlistRepository = transactionManager.getCustomRepository(this.wishlistRepository_)
-      const createdWishlist = wishlistRepository.create({ region_id: region_id })
+      const createdWishlist = wishlistRepository.create(payload)
 
       return await wishlistRepository.save(createdWishlist)
     })
