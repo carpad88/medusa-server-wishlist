@@ -12,7 +12,10 @@ class WishlistService extends BaseService {
   async retrieve(id) {
     return await this.atomicPhase_(async (transactionManager) => {
       const wishlistRepository = transactionManager.getCustomRepository(this.wishlistRepository_)
-      const [wishlist] = await wishlistRepository.find({ where: { id } })
+      const [wishlist] = await wishlistRepository.find({
+        where: { id },
+        relations: ['items', 'items.product']
+      })
 
       if (!wishlist) {
         throw new MedusaError(MedusaError.Types.NOT_FOUND, `Wishlist with ${ id } was not found`)
@@ -31,8 +34,14 @@ class WishlistService extends BaseService {
 
       const wishlistRepository = transactionManager.getCustomRepository(this.wishlistRepository_)
       const createdWishlist = wishlistRepository.create(payload)
+      const { id } = await wishlistRepository.save(createdWishlist)
 
-      return await wishlistRepository.save(createdWishlist)
+      const [wishlist] = await wishlistRepository.find({
+        where: { id },
+        relations: ['items', 'items.product']
+      })
+
+      return wishlist
     })
   }
 
@@ -48,7 +57,10 @@ class WishlistService extends BaseService {
         await wishlistItemRepository.save(createdItem)
       }
 
-      const [wishlist] = await wishlistRepository.find({ where: { id: wishlist_id } })
+      const [wishlist] = await wishlistRepository.find({
+        where: { id: wishlist_id },
+        relations: ['items', 'items.product']
+      })
       return wishlist
     })
   }
@@ -64,7 +76,10 @@ class WishlistService extends BaseService {
         await wishlistItemRepository.remove(item)
       }
 
-      const [wishlist] = await wishlistRepository.find({ where: { id: wishlist_id } })
+      const [wishlist] = await wishlistRepository.find({
+        where: { id: wishlist_id },
+        relations: ['items', 'items.product']
+      })
       return wishlist
     })
   }

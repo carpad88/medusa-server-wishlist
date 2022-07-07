@@ -20,7 +20,6 @@ export class Wishlist extends BaseEntity {
 
   @OneToMany(() => WishlistItem, (wishlistItem) => wishlistItem.wishlist, {
     onDelete: "CASCADE",
-    eager: true
   })
   items: WishlistItem[]
 
