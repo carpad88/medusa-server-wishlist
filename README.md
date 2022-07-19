@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Medusa Starter Default
+  Medusa Starter with Wishlist
 </h1>
 <p align="center">
 This repo provides the skeleton to get you started with using <a href="https://github.com/medusajs/medusa">Medusa</a>. Follow the steps below to get ready.
@@ -30,121 +30,64 @@ This starter has minimal prerequisites and most of these will usually already be
 
 - [Install Node.js](https://nodejs.org/en/download/)
 - [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Install SQLite](https://www.sqlite.org/download.html)
+- [Install Postgres](https://www.postgresql.org)
 
-## Setting up your store
+## Quick start
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa
-  yarn global add @medusajs/medusa
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Run your project
-  ```
-  cd my-medusa-store
-  medusa develop
-  ```
+1. **Clone this repository**
 
-Your local Medusa server is now running on port **9000**.
+```zsh
+  git clone git@github.com:carpad88/medusa-server-wishlist.git medusa-wishlist
+```
 
-### Seeding your Medusa store
+2. **Install dependencies**
 
----
+```zsh
+  cd medusa-wishlist
+  yarn
+```
+
+3. **Link to your database**
+
+> To be able to run migrations you need to use a **Postgres database**.
+
+Update the `medusa-config.js` with your postgres database URL 
+
+```js
+const DATABASE_URL = process.env.DATABASE_URL || "<link to your postgres database>";
+```
+
+4. **Build and run migrations**
+
+Run the next commands to build and run your migrations
+
+```zsh
+yarn run build && medusa migrations run 
+```
+5. **Seed your store**
 
 To seed your medusa store run the following command:
 
-```
+```zsh
 medusa seed -f ./data/seed.json
 ```
 
-This command seeds your database with some sample datal to get you started, including a store, an administrator account, a region and a product with variants. What the data looks like precisely you can see in the `./data/seed.json` file.
+This command seeds your database with some sample data to get you started, including a store, an administrator account, a region and a product with variants. What the data looks like precisely you can see in the `./data/seed.json` file.
 
-## Setting up your store with Docker
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa-cli
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Update project config in `medusa-config.js`:
+6. **Start development**
 
-  ```
-  module.exports = {
-    projectConfig: {
-      redis_url: REDIS_URL,
-      database_url: DATABASE_URL, //postgres connectionstring
-      database_type: "postgres",
-      store_cors: STORE_CORS,
-      admin_cors: ADMIN_CORS,
-    },
-    plugins,
-  };
-  ```
+You should now be able to start developing your site.
 
-- Run your project
-
-  When running your project the first time `docker compose` should be run with the `build` flag to build your contianer locally:
-
-  ```
-  docker compose up --build
-  ```
-
-  When running your project subsequent times you can run docker compose with no flags to spin up your local environment in seconds:
-
-  ```
-  docker compose up
-  ```
-
-Your local Medusa server is now running on port **9000**.
-
-### Seeding your Medusa store with Docker
-
----
-
-To add seed data to your medusa store runnign with Docker, run this command in a seperate terminal:
-
-```
-docker exec medusa-server medusa seed -f ./data/seed.json
+```zsh
+yarn start
 ```
 
-This will execute the previously described seed script in the running `medusa-server` Docker container.
+5. **Open the source code and start editing!**
 
-## Try it out
+   Your server is now running at `http://localhost:9000`!
 
-```
-curl -X GET localhost:9000/store/products | python -m json.tool
-```
 
-After the seed script has run you will have the following things in you database:
 
-- a User with the email: admin@medusa-test.com and password: supersecret
-- a Region called Default Region with the countries GB, DE, DK, SE, FR, ES, IT
-- a Shipping Option called Standard Shipping which costs 10 EUR
-- a Product called Cool Test Product with 4 Product Variants that all cost 19.50 EUR
 
-Visit [docs.medusa-commerce.com](https://docs.medusa-commerce.com) for further guides.
 
-<p>
-  <a href="https://www.medusa-commerce.com">
-    Website
-  </a> 
-  |
-  <a href="https://medusajs.notion.site/medusajs/Medusa-Home-3485f8605d834a07949b17d1a9f7eafd">
-    Notion Home
-  </a>
-  |
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    Twitter
-  </a>
-  |
-  <a href="https://docs.medusa-commerce.com">
-    Docs
-  </a>
-</p>
